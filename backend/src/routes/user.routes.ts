@@ -12,6 +12,7 @@ export const userRoutes = new Hono<{
 }>();
 
 
+
 //SIGNUP ROUTE PLEASE LOOK AT THE COMMENTS BELOW
 //This route is used to create a new user in the database
 //The user sends a POST request to the /signup endpoint with the following body:
@@ -27,12 +28,14 @@ export const userRoutes = new Hono<{
 //The JWT token is signed using the JWT_SECRET environment variable
 
 userRoutes.post('/signup', async(c) => {
+    console.log('signup route')
     const body = await c.req.json()
-    const { success } = signinInput.safeParse(body);
-    if (!success) {
-      c.status(400);
-      return c.text('Invalid input');
-    }
+    // const { success } = signinInput.safeParse(body);
+    // console.log("success",success)
+    // if (!success) {
+    //   c.status(400);
+    //   return c.text('Invalid input');
+    // }
     const prisma = new PrismaClient({
       datasourceUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate())
