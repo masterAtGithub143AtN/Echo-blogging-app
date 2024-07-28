@@ -7,9 +7,10 @@
   "dependencies": {
     "@prisma/client": "^5.17.0",
     "@prisma/extension-accelerate": "^1.1.0",
-    "@saket_12/medium-common": "^1.0.1",
+    "@saket_12/medium-common": "^1.0.5",
     "cors": "^2.8.5",
     "hono": "^4.5.0",
+    "jwt-decode": "^4.0.0",
     "prisma": "^5.17.0"
   },
   "devDependencies": {

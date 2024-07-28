@@ -1,15 +1,25 @@
 import { Hono } from "hono";
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
-import {sign ,verify,decode} from 'hono/jwt';
-import { signinInput,SignupInput } from "@saket_12/medium-common";
+import { sign, verify } from 'hono/jwt';
+import { signinInput, SignupInput } from "@saket_12/medium-common";
+import jwtDecode from 'jwt-decode';  // Correct import
 
 export const userRoutes = new Hono<{
-    Bindings:{
+    Bindings: {
         DATABASE_URL: string;
         JWT_SECRET: string;
     }
 }>();
+
+interface UserDetailsValidation {
+    id: number;
+    username: string;
+    name: string;
+}
+
+
+
 
 
 
@@ -30,12 +40,12 @@ export const userRoutes = new Hono<{
 userRoutes.post('/signup', async(c) => {
     console.log('signup route')
     const body = await c.req.json()
-    // const { success } = signinInput.safeParse(body);
-    // console.log("success",success)
-    // if (!success) {
-    //   c.status(400);
-    //   return c.text('Invalid input');
-    // }
+    const { success } = signinInput.safeParse(body);
+    console.log("success",success)
+    if (!success) {
+      c.status(400);
+      return c.text('Invalid input');
+    }
     const prisma = new PrismaClient({
       datasourceUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate())
@@ -44,12 +54,20 @@ userRoutes.post('/signup', async(c) => {
         data:{
           username: body.username,
           name: body.name,
-          password: body.password
+          password: body.password,
+          collegename: body.collegename,
+          email:body.email,
+          course: body.course,
+          semester: body.semester,
+          passingyear: body.passingyear,
+          branch: body.branch,
+          profile: body.profile
         }
       })
       const jwt=await sign({
         id: user.id,
-        username: user.username
+        username: user.username,
+        name: user.name
       },c.env.JWT_SECRET);
   
       c.status(201);
@@ -105,7 +123,8 @@ userRoutes.post('/signin', async(c) => {
       }
       const jwt=await sign({
         id:user.id,
-        username: user.username
+        username: user.username,
+        name:user.name
       },c.env.JWT_SECRET);
   
       c.status(201);
@@ -123,3 +142,159 @@ userRoutes.post('/signin', async(c) => {
   
     return c.text('signin route')
   })
+
+
+
+
+
+
+
+userRoutes.use("/*", async (c, next) => {
+  // console.log("auth middleware");
+    const authHeader = c.req.header("Authorization") || "";
+    
+    if (!authHeader) {
+        c.status(401);
+        return c.text("Provide a token in the header");
+    }
+
+    // console.log("authHeader", authHeader);
+    try {
+        const user = await verify(authHeader, c.env.JWT_SECRET);
+        // console.log("user", user);
+
+        if (user) {
+            await next();
+        } else {
+            c.status(401);
+            return c.text("Unauthorized");
+        }
+    } catch (error) {
+        console.error("Error verifying token:", error);
+        c.status(401);  // Changed to 401 for unauthorized access
+        return c.text("Invalid token or token has expired");
+    }
+});
+
+
+
+
+ userRoutes.post("/:username/about/update",async(c)=>{
+
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate())
+    const body=await c.req.json();
+    try {
+        const user=await prisma.user.update({
+            where:{
+                username: c.req.param("username")
+            },
+            data:{
+                about: body.about
+            }
+        })
+        return c.json(user.about);
+    } catch (error) {
+        console.log(error);
+        return c.text("Error updating about information");
+    }
+}
+)
+
+
+
+
+
+userRoutes.get("/:username/about",async(c)=>{
+  // console.log("about route")
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate())
+    const user=await prisma.user.findFirst({
+        where:{
+            username: c.req.param("username")
+        }
+    })
+    if(!user){
+        c.status(405);
+        
+        return c.text("User not found");
+    }
+    console.log("userAbout",user.about);
+    return c.json(user.about);
+})
+
+
+
+userRoutes.get("/details/:username",async(c)=>{
+  const prisma=new PrismaClient({
+    datasourceUrl:c.env.DATABASE_URL
+  }).$extends(withAccelerate());
+  try {
+    const user=await prisma.user.findFirst({
+      where:{
+        username: c.req.param("username")
+      },
+      select:{
+        id:true,
+        username:true,
+        name:true,
+        email:true,
+        collegename:true,
+        course:true,
+        semester:true,
+        passingyear:true,
+        branch:true,
+        profile:true,
+        about:true
+      }
+    })
+    if(!user){
+      c.status(405);
+      return c.text("User not found");
+    }
+    return c.json(user);
+  } catch (error) {
+    console.log(error);
+    return c.text("Error fetching user details");
+  }
+})
+
+
+userRoutes.post("/:username/update",async(c)=>{
+  const prisma=new PrismaClient({
+    datasourceUrl:c.env.DATABASE_URL
+  }).$extends(withAccelerate());
+  const body=await c.req.json();
+  try {
+    const authHeader = c.req.header("Authorization") || "";
+    
+    const decodeduser=await verify(authHeader, c.env.JWT_SECRET);
+    if(decodeduser.username!==c.req.param("username")){
+      c.status(401);
+      return c.text("Unauthorized");
+    }
+    const user=await prisma.user.update({
+      where:{
+        username:c.req.param("username")
+      },
+      data:{
+        username:body.username,
+        name:body.name,
+        email:body.email,
+        collegename:body.collegename,
+        course:body.course,
+        semester:body.semester,
+        passingyear:body.passingyear,
+        branch:body.branch,
+        profile:body.profile
+      }
+    })
+    return c.json(user);
+  } catch (error) {
+    console.log(error);
+    return c.text("Error updating user details");
+  }
+})
+

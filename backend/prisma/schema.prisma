@@ -19,7 +19,17 @@ model User{
   name String?
   username String @unique
   password String
+  email String @unique
+  profile String?
+  collegename String?
+  course String?
+  branch String?
+  semester String?
+  passingyear String?
+  about String?
+  student Boolean @default(true)
   blogs Blog[]
+  favourites FavouriteList[]
 }
 
 model Blog {
@@ -28,9 +38,22 @@ model Blog {
   content String
   thumbnail String?
   published Boolean @default(false)
+  date DateTime @default(now())
   authorId Int
   author User @relation(fields: [authorId], references: [id])
+  favourites FavouriteList[]
+
 }
+
+model FavouriteList{
+  id Int @id @default(autoincrement())
+  userId Int
+  blogId Int
+  user User @relation(fields: [userId], references: [id])
+  blog Blog @relation(fields: [blogId], references: [id])
+}
+
+
 
 
 

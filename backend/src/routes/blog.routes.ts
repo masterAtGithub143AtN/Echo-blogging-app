@@ -23,23 +23,38 @@ blogRoutes.get('/bulk',async(c)=>{
       datasourceUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate())
     try {
-      const posts=await prisma.blog.findMany();
-      return c.json(posts);
+      const posts=await prisma.blog.findMany({
+        include:{
+            author:{
+                select:{
+                    username:true,
+                    name:true
+                }
+            
+            }
+        }
+      });
+      if(posts){
+        return c.json(posts);
+      }
+        else{
+            c.status(404);
+            throw c.text('No blogs found');
+        }
     } catch (error) {
       console.log(error);
-      return c.text('Internal server error');
+      throw c.text('Internal server error');
     }
   })
 
 
 
-blogRoutes.use("/*", async (c, next) => {
-    const authHeader = c.req.header("Autharization") || "";
+ blogRoutes.use("/*", async (c, next) => {
+    const authHeader = c.req.header("Authorization") || "";
     if (!authHeader) {
         c.status(401);
         return c.text("provide a token  in the header");
     }
-
     console.log("authHeader", authHeader);
     try {
         const user = await verify(authHeader, c.env.JWT_SECRET);
@@ -140,6 +155,7 @@ blogRoutes.put('/update/:id', async (c) => {
 
 
 blogRoutes.get('/read/:id', async (c) => {
+    const userDetails = c.get("userDetails");
     const prisma = new PrismaClient({
         datasourceUrl: c.env.DATABASE_URL,
     }).$extends(withAccelerate())
@@ -148,18 +164,25 @@ blogRoutes.get('/read/:id', async (c) => {
          const IdOfUser = userDetails.id;
         const post = await prisma.blog.findFirst({
             where: {
-                authorId: IdOfUser,
-                id: Number(c.req.param("id"))
+                id: Number(c.req.param("id")),
+            },
+            include:{
+                author:{
+                    select:{
+                        username:true,
+                        name:true
+                    }
+                }
             }
         })
         if (!post) {
             c.status(404);
-            return c.text('Blog not found')
+            throw c.text('Blog not found')
         }
         return c.json(post);
     } catch (error) {
         console.log(error);
-        return c.text('Internal server error');
+        throw c.text('Internal server error');
     }
 })
 
@@ -189,3 +212,209 @@ blogRoutes.get('/read', async (c) => {
         return c.text('Internal server error');
     }
 })
+
+
+  blogRoutes.get("/public/:username", async (c) => {
+    const prisma=new PrismaClient({
+        datasourceUrl:c.env.DATABASE_URL
+    }).$extends(withAccelerate());
+    try {
+        const user=await prisma.user.findFirst({
+            where:{
+                username:c.req.param("username")
+            },
+            select:{
+                id:true,
+                username:true,
+                name:true,
+                profile:true,
+                // imageUrl:true,
+                blogs:{
+                    select:{
+                        id:true,
+                        title:true,
+                        content:true,
+                        date:true,
+                        thumbnail:true
+                    }
+                }
+            }
+        })
+        if(user){
+            c.status(200);
+            return c.json(user);
+        }
+        else{
+            c.status(404);
+            return c.text('User not found');
+        }
+        
+    } catch (error) {
+        console.log(error);
+        c.status(500);
+        return c.text('Internal server error');
+    }
+  })
+
+  blogRoutes.post ("/favorite/add/:id/:userid",async(c)=>{
+    const prisma=new PrismaClient({
+        datasourceUrl:c.env.DATABASE_URL
+    }).$extends(withAccelerate());
+    try {
+        const blogId=Number(c.req.param("id"));
+        const userId=Number(c.req.param("userid"));
+        const existedFavorite=await prisma.favouriteList.findFirst({
+            where:{
+                blogId:blogId,
+                userId:userId
+            }
+        })
+        if(existedFavorite){
+            c.status(409);
+            return c.text('Blog already in favorites');
+        }
+        const favorite=await prisma.favouriteList.create({
+            data:{
+                blogId:blogId,
+                userId:userId
+            }
+        })
+        if(favorite){
+            c.status(200);
+            return c.json(favorite);
+        }
+        else{
+            c.status(404);
+            return c.text('Blog or user not found');
+        }
+    } catch (error) {
+        console.log(error);
+        c.status(500);
+        return c.text('Internal server error');
+    }
+
+  })
+
+  blogRoutes.get("/get/favorite/:username",async(c)=>{
+    const prisma=new PrismaClient({
+        datasourceUrl:c.env.DATABASE_URL
+    }).$extends(withAccelerate());
+    try {
+        const user=await prisma.user.findFirst({
+            where:{
+                username:c.req.param("username")
+            }
+        })
+        if(user){
+            const favorite=await prisma.favouriteList.findMany({
+                where:{
+                    userId:user.id
+                },
+                include:{
+                    blog:{
+                        select:{
+                            id:true,
+                            title:true,
+                            content:true,
+                            date:true,
+                            thumbnail:true
+                        }
+                    },
+                    user:{
+                        select:{
+                            id:true,
+                            username:true,
+                            name:true
+                        }
+                    }
+                }
+            })
+            if(favorite){
+                c.status(200);
+                return c.json(favorite);
+            }
+            else{
+                c.status(404);
+                return c.text('No favorite blogs found');
+            }
+        }
+        else{
+            c.status(404);
+            return c.text('User not found');
+        }
+    } catch (error) {
+        console.log(error);
+        c.status(500);
+        return c.text('Internal server error');
+    }
+  })
+
+
+    blogRoutes.delete("/favorite/remove/:id/:userid",async(c)=>{
+        const prisma=new PrismaClient({
+            datasourceUrl:c.env.DATABASE_URL
+        }).$extends(withAccelerate());
+        try {
+            const favoriteId=Number(c.req.param("id"));
+            const userId=Number(c.req.param("userid"));
+            const favorite=await prisma.favouriteList.delete({
+                where:{
+                    id:favoriteId
+                }
+            })
+            if(favorite){
+                c.status(200);
+                return c.text('Blog removed from favorites');
+            }
+            else{
+                c.status(404);
+                return c.text('Blog not found in favorites');
+            }
+        } catch (error) {
+            console.log(error);
+            c.status(500);
+            return c.text('Internal server error');
+        }
+    })
+
+
+
+
+    blogRoutes.get('/search', async (c) => {
+        const searchText = c.req.query('query'); // Get the search text from the query parameter
+      
+        if (!searchText) {
+          c.status(400);
+          return c.text('Search query is required');
+        }
+      
+        const prisma = new PrismaClient({
+          datasourceUrl: c.env.DATABASE_URL,
+        }).$extends(withAccelerate());
+      
+        try {
+          const blogs = await prisma.blog.findMany({
+            where: {
+              OR: [
+                { title: { contains: searchText, mode: 'insensitive' } },
+                { content: { contains: searchText, mode: 'insensitive' } },
+              ],
+            },
+            include: {
+              author: {
+                select: {
+                  username: true,
+                  name: true,
+                  id: true,
+                }
+              }
+            }
+          });
+          return c.json(blogs);
+        } catch (error) {
+          console.error('Error searching for blogs:', error);
+          c.status(500);
+          return c.text('Internal server error');
+        }
+      });
+
