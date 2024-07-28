@@ -92,11 +92,11 @@ export const Signup = () => {
                 </div>
                 <div className=" flex justify-center pt-3">
 
-                <button onClick={senRequest} className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2" >Blue</button>
+                <button onClick={senRequest} className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2" >Signup</button>
 
                 </div>
           
-                <div className=" flex justify-center p-3">
+                <div className=" flex justify-center p-3 bg-slate-50">
                     <Heading message="Already have an account ?" functionality="signin"></Heading>
                 </div>
                 </div>

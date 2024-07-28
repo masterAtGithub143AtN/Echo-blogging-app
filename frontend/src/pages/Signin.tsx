@@ -51,7 +51,7 @@ export const Signin = () => {
                     <div className=' pt-5'>
                         <button className="bg-blue-500 text-white p-2 rounded-md w-full" onClick={sendRequest}>Signin</button>
                     </div>
-                    <div className=' flex justify-center pt-5 text-red-400 '>
+                    <div className=' flex justify-center pt-5 text-red-200 '>
                         <Heading message="Don't have an account ?" functionality="Signup"/>
                     </div>
             </div>
