@@ -71,7 +71,14 @@ userRoutes.post('/signup', async(c) => {
       },c.env.JWT_SECRET);
   
       c.status(201);
-      return c.text(jwt);
+      return c.json({
+        token: jwt,
+        user: {
+            id: user.id,
+            username: user.username,
+            name: user.name
+        }
+      });
   
     } catch (error) {
       console.log(error);
@@ -132,7 +139,8 @@ userRoutes.post('/signin', async(c) => {
         token: jwt,
         user: {
             id: user.id,
-            username: user.username
+            username: user.username,
+            name: user.name
         }
       });
       
@@ -291,7 +299,15 @@ userRoutes.post("/:username/update",async(c)=>{
         profile:body.profile
       }
     })
-    return c.json(user);
+    const jwt=await sign({
+      id:user.id,
+      username: user.username,
+      name:user.name
+    },c.env.JWT_SECRET);
+    return c.json({
+      token:jwt,
+      user
+    });
   } catch (error) {
     console.log(error);
     return c.text("Error updating user details");
