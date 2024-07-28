@@ -40,11 +40,13 @@ export const BlogWriting = () => {
         }
       );
       // console.log("Blog created successfully");
-      alert('msg: Blog created successfully');
+      if(response){
+        alert('msg: Blog created successfully');
 
       // Reset the input fields
       setTitle("");
       setContent("");
+      }
     } catch (error: any) {
         setTitle("");
         setContent("");

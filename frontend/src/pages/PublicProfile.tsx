@@ -59,10 +59,7 @@ export const PublicProfile = () => {
         },
         imageUrl: "",
       }));
-      const author = {
-        username: publicDetails.username,
-        name: publicDetails.name,
-      };
+      
 
     return (
         <div>
