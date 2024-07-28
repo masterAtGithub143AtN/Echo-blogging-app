@@ -82,6 +82,7 @@ export const EditProfile = () => {
             });
             if (response.status === 200) {
                 console.log("User updated successfully");
+                localStorage.setItem("token", response.data.token);
                 navigate(`/blog/${input.username}`, { state: input });
             }
         } catch (error) {
