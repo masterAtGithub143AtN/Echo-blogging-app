@@ -2,6 +2,7 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import axios from "axios"
+import { BackendUrl } from "../Config";
 
 interface SignupInput {
     name: string;
@@ -16,7 +17,7 @@ export const Auth = ({type}:{type:"signup" | "signin"}) => {
     username:"",
     password:""
   });
-  const BACKEND_URL = "http://127.0.0.1:8787/api/v1/user"
+  const BACKEND_URL = `${BackendUrl}/user`
   async function  sendRequest  (){
     try {
      const response = await axios.post(`${BACKEND_URL}/${type==="signup"?"signup":"signin"}`,postInputs);

@@ -1,4 +1,4 @@
-import { Link, useLocation, useParams,  } from "react-router-dom"
+import { Link, useLocation  } from "react-router-dom"
 import { Avatar } from "./Avatar"
 import { useGetABlog } from "../hooks/GetABlog"
 import { AppBar } from "./AppBar";

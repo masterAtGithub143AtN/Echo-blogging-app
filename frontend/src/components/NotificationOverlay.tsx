@@ -5,7 +5,7 @@ interface NotificationOverlayProps {
   url: string;
 }
 
-const NotificationOverlay: React.FC<NotificationOverlayProps> = ({ onClose, url }) => {
+const NotificationOverlay: React.FC<NotificationOverlayProps> = ({ onClose}) => {
   const overlayRef = useRef<HTMLDivElement>(null);
 
   // Fetch notifications from the provided URL (implement fetch logic as needed)

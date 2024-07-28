@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
 import { InputBox } from "../components/InputBox";
-import { Qoute } from "../components/Quote";
-import { SignupInput, signupInput } from "@saket_12/medium-common";
-import { Heading } from "../components/Heading";
+import { SignupInput } from "@saket_12/medium-common";
 import axios from "axios";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { AppBar } from "../components/AppBar";
 import { jwtDecode } from "jwt-decode";
 import { decodedTokenType } from "./PublicProfile";
+import { BackendUrl } from "../Config";
 
 export const EditProfile = () => {
     const token = localStorage.getItem("token");
@@ -52,7 +51,7 @@ export const EditProfile = () => {
             // Fetch user details when component mounts
             async function fetchUserDetails() {
                 try {
-                    const response = await axios.get(`http://127.0.0.1:8787/api/v1/user/details/${username}`,{
+                    const response = await axios.get(`${BackendUrl}/user/details/${username}`,{
                         headers: {
                             Authorization: `${localStorage.getItem("token")}`,
                         },
@@ -76,7 +75,7 @@ export const EditProfile = () => {
             //     alert("Invalid input");
             //     return;
             // }
-            const response = await axios.post(`http://127.0.0.1:8787/api/v1/user/${username}/update`, filteredInput, {
+            const response = await axios.post(`${BackendUrl}/user/${username}/update`, filteredInput, {
                 headers: {
                     Authorization: `${localStorage.getItem("token")}`,
                 },

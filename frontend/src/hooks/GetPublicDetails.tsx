@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { BackendUrl } from "../Config";
 
 export interface Blog {
   id: number;
@@ -42,7 +43,7 @@ export const usePublicDetails = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:8787/api/v1/blog/public/${username}`, {
+        const response = await axios.get(`${BackendUrl}/blog/public/${username}`, {
           headers: {
             Authorization: localStorage.getItem("token"),
           },

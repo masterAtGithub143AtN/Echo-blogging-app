@@ -8,6 +8,7 @@ import axios from "axios";
 import BlogCard from "../components/BlogCard";
 import { Blog } from "../hooks/GetBlogs";
 import About from "../components/About";
+import { BackendUrl } from "../Config";
 
 export const UserProfile = () => {
   const token = localStorage.getItem("token");
@@ -181,7 +182,7 @@ const Home = (props:any) => {
   useEffect(()=>{
     ;(async()=>{
       try {
-        const response=await axios.get(`http://127.0.0.1:8787/api/v1/blog/get/favorite/${props.username}`,{
+        const response=await axios.get(`${BackendUrl}/blog/get/favorite/${props.username}`,{
           headers:{
             Authorization:localStorage.getItem("token")
           }

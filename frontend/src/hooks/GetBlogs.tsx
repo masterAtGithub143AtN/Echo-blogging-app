@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react"
+import { BackendUrl } from "../Config";
 
 export interface Blog{
     id:number;
@@ -19,7 +20,7 @@ export const useBlogs=()=>{
 
     useEffect(()=>{
         ;(async()=>{
-            const response=await axios.get("http://localhost:8787/api/v1/blog/bulk",{
+            const response=await axios.get(`${BackendUrl}/blog/bulk`,{
                 headers:{
                     Authorization:localStorage.getItem("token")
                 }

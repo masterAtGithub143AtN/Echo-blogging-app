@@ -7,6 +7,7 @@ import { useNavigate} from 'react-router-dom'
 import { Heading } from '../components/Heading'
 import { signinInput } from '@saket_12/medium-common'
 import { jwtDecode } from 'jwt-decode'
+import { BackendUrl } from '../Config'
 
 export const Signin = () => {
     
@@ -23,7 +24,7 @@ export const Signin = () => {
                 return;
             }
             console.log(success);
-            const response=await axios.post("http://127.0.0.1:8787/api/v1/user/signin",input);
+            const response=await axios.post(`${BackendUrl}/user/signin`,input);
             localStorage.setItem("token",response.data.token);
             const userData=jwtDecode(response.data.token);
             // const userData={username: "saket_12"};

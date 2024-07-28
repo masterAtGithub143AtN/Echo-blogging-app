@@ -1,7 +1,7 @@
 import axios from "axios";
-import { set } from "mongoose";
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom";
+import { BackendUrl } from "../Config";
 
 interface Blog{
     id:number;
@@ -48,7 +48,7 @@ export const useGetABlog=()=>{
   
         try {
             ;(async()=>{
-                const response=await axios.get(`http://127.0.0.1:8787/api/v1/blog/read/${blogid}`,{
+                const response=await axios.get(`${BackendUrl}/blog/read/${blogid}`,{
                     headers:{
                         Authorization:localStorage.getItem("token")
                     }

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { BackendUrl } from "../Config";
 
 export interface Blog{
     id:number;
@@ -25,7 +26,7 @@ export const useSearching = () => {
 
     useEffect(()=>{
         ;(async()=>{
-            const response=await axios.get("http://localhost:8787/api/v1/blog/search",{
+            const response=await axios.get(`${BackendUrl}/blog/search`,{
                 headers:{
                     Authorization:localStorage.getItem("token")
                 },

@@ -1,9 +1,10 @@
 import { useState } from "react";
 import AutoResizingTextarea from "../components/Pragraph";
-import { blogCreateInput, BlogCreateInput } from "@saket_12/medium-common";
+import { blogCreateInput } from "@saket_12/medium-common";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AppBar } from "../components/AppBar";
+import { BackendUrl } from "../Config";
 
 export const BlogWriting = () => {
     const location=useLocation();
@@ -30,7 +31,7 @@ export const BlogWriting = () => {
 
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8787/api/v1/blog/create",
+        `${BackendUrl}/blog/create`,
         { title, content },
         {
           headers: {
@@ -38,7 +39,7 @@ export const BlogWriting = () => {
           },
         }
       );
-      console.log("Blog created successfully");
+      // console.log("Blog created successfully");
       alert('msg: Blog created successfully');
 
       // Reset the input fields

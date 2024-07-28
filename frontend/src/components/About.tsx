@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
+import { BackendUrl } from "../Config";
 
 interface AboutProps {
   username: string;
@@ -14,7 +15,7 @@ const About = ({ username }: AboutProps) => {
 
   useEffect(() => {
     (async () => {
-      const response = await axios.get(`http://127.0.0.1:8787/api/v1/user/${username}/about`, {
+      const response = await axios.get(`${BackendUrl}/user/${username}/about`, {
         headers: {
           Authorization: localStorage.getItem("token") || "",
         },
@@ -33,7 +34,7 @@ const About = ({ username }: AboutProps) => {
             return;
         }
       await axios.post(
-        `http://127.0.0.1:8787/api/v1/user/${username}/about/update`,
+        `${BackendUrl}/user/${username}/about/update`,
         { about: aboutText },
         {
           headers: {

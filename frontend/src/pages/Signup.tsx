@@ -6,6 +6,7 @@ import { SignupInput,signupInput } from "@saket_12/medium-common"
 import { Heading } from "../components/Heading"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
+import { BackendUrl } from "../Config"
 
 
 export const Signup = () => {
@@ -30,7 +31,7 @@ export const Signup = () => {
                 alert("Invalid input");
                 return;
             }
-            const response = await axios.post("http://127.0.0.1:8787/api/v1/user/signup",input);
+            const response = await axios.post(`${BackendUrl}/user/signup`,input);
             localStorage.setItem("token",response.data.token);
             console.log("User created successfully");
             navigate(`/blog/${input.username}`,{state:input});
