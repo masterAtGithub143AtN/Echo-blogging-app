@@ -2,13 +2,31 @@ import { useState } from "react";
 import AutoResizingTextarea from "../components/Pragraph";
 import { blogCreateInput } from "@saket_12/medium-common";
 import axios from "axios";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AppBar } from "../components/AppBar";
 import { BackendUrl } from "../Config";
 
 export const BlogWriting = () => {
     const location=useLocation();
     const userData=location.state;
+    if(!userData){
+        return <div>
+        <div className=" flex flex-col justify-center  h-screen">
+            <div className=" flex flex-row justify-center text-green-200">
+                <div className=" text-2xl font-semibold ">
+
+                <div>
+                    <div>Please sign in to view this page</div>
+                    <Link to={"/signin"}>
+                    <div className=" text-2xl">Click</div>
+                    </Link>
+                    <div>Here to signin</div>
+                </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    }
   const navigate = useNavigate();
   
   const [title, setTitle] = useState<string>("");

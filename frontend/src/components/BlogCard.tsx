@@ -4,7 +4,7 @@ import { Blog } from "../hooks/GetBlogs";
 
 interface BlogCardProps {
   blog: Blog;
-  state:{
+  state?:{
     username?:string,
     name?:string,
     id?:number,

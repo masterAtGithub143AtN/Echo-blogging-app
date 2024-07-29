@@ -3,11 +3,28 @@
 import BlogCard from "../components/BlogCard";
 import { useBlogs } from "../hooks/GetBlogs";
 import { ReadingComponent } from "../components/ReadingComponent";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export const ReadABlog = () => {
     const location=useLocation();
     const userData=location.state;
+    if(userData===null){
+        return (
+            <div className="flex flex-col justify-center h-screen">
+              <div className="flex flex-row justify-center text-green-200">
+                <div className="text-2xl font-semibold">
+                  <div>
+                    <div>Please sign in to view this page</div>
+                    <Link to="/signin">
+                      <div className="text-2xl">Click</div>
+                    </Link>
+                    <div>Here to sign in</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+    }
     const {blogs}=useBlogs();
     return (
         <div>

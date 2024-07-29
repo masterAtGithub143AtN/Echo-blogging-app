@@ -6,22 +6,24 @@ import SearchForm from "./SearchForm"
 
 
 interface AppBarProps {
-    imageUrl: string;
-    userData: {
-        username: string;
-        name: string;
+    imageUrl?: string | "";
+    userData?: {
+        username?: string | "";
+        name?: string | "";
     }
     fromwhere?: string | "";
     public?: boolean | false;
+    loggedIn?: boolean | true;
 }
 
 export const AppBar = (props:AppBarProps) => {
+  console.log("logged in",props.loggedIn)
     const URL_FOR_Notification="/notification";
     return(
         <div className="grid grid-cols-1 sm:grid-cols-2 shadow-xl bg-gradient-to-r from-gray-400 to-slate-600 bg-writing-pattern rounded-md">
       <div className="grid grid-cols-2">
       <div className="flex flex-col justify-center pl-8 text-4xl font-semibold">
-         <Link to={`/blog/${props.userData.username}`} state={props.userData}>
+         <Link to={(props.loggedIn==true && props.userData)?`/blog/${props.userData.username}`:`/`} state={props.userData}>
             <h1 className="flex justify-center">Echo</h1>
          </Link>
          </div>
@@ -33,7 +35,7 @@ export const AppBar = (props:AppBarProps) => {
         <div className=" col-span-2"></div>
         <div className="flex justify-center px-4 col-span-3">
   {props.fromwhere !== "Blogwriting" ? (
-    <Link to={`/blog/${props.userData.username}/write`} className="flex justify-center w-max" state={props.userData}>
+    <Link to={(props.userData)?`/blog/${props.userData.username}/write`:`/signin`} className="flex justify-center w-max" state={props.userData}>
       <div className="flex justify-center items-center">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -56,14 +58,29 @@ export const AppBar = (props:AppBarProps) => {
   )}
 </div>
 
-        <div className="flex flex-col justify-center col-span-1">
+        {(props.loggedIn || props.loggedIn==undefined)==true?<div className=' flex  col-span-2'>
+          <div className="flex flex-col justify-center mr-5 mt-2">
           <Notification messageCount={0} url={URL_FOR_Notification} />
         </div>
-          <div className=" flex flex-col justify-center col-span-1">
-            <div className=' flex justify-center w-full'>
-              <Avatar size="medium" username={props.userData.username} public={props.public}></Avatar>
+          <div className=" flex flex-col justify-center mt-3">
+            <div className=' flex justify-center w-full ml-7'>
+              {(props.userData?.username)?<Avatar size="medium" username={props.userData.username} public={props.public}></Avatar>:<></>}
             </div>
            </div>
+          </div>:<div className=' h-full'>
+          <div className="flex flex-col justify-center col-span-1 h-full">
+          <Link to="/signin">
+            <div className="flex justify-center w-full h-full">
+              <button className="bg-gradient-to-r from-gray-600 to bg-slate-700 text-white p-2 rounded-lg mt-3">Sign In</button>
+            </div>
+          </Link>
+        </div>
+        <div className=" flex flex-col justify-center col-span-1">
+            <div className=' flex justify-center w-full'>
+             
+            </div>
+           </div>
+            </div>}
       </div>
       <div className=' h-4 shadow-lg'>
 
