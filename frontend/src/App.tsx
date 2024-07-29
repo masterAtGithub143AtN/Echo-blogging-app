@@ -11,6 +11,7 @@ import { PublicProfile } from './pages/PublicProfile'
 import { NotificationPage } from './pages/NotificationPage'
 import { EditProfile } from './pages/EditProfile'
 import { SearchingPage } from './pages/SearchingPage'
+import { Home } from './pages/Home'
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
+          <Route path='/' element={<Home></Home>}></Route>
           <Route path="/signup" element={<Signup />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="/blog/:username" element={<UserDesktop></UserDesktop>} />
