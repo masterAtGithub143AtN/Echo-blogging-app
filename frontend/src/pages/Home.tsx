@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom"
 import { decodedTokenType } from "./PublicProfile";
 import { jwtDecode } from "jwt-decode";
@@ -9,7 +9,7 @@ import BlogCard from "../components/BlogCard";
 
 export const Home =()=>{
     const navigate=useNavigate();
-    const {blogs,loading}=useBlogs();
+    const {blogs}=useBlogs();
     useEffect(()=>{
         ;(async()=>{
             const token=localStorage.getItem("token");

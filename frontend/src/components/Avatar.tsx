@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import {  useState } from "react";
 import { Link } from "react-router-dom";
 import { OverlayAvatar } from "./OverlayAvatar";
 
@@ -30,7 +30,6 @@ export const Avatar = ({ username, size, public: isPublic = false, link = true }
     // console.log(username);
 
   // Fetch notifications from the provided URL (implement fetch logic as needed)
-  const notifications = []; // Replace with actual fetched notifications
 
 
     // Handle click outside of the notification panel
