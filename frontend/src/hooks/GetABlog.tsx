@@ -30,7 +30,7 @@ export const useGetABlog=()=>{
         date:"23/07/2024"
     });
     const [error,setError]=useState(false);
-    console.log("id ",blogid);
+    // console.log("id ",blogid);
     useEffect(()=>{
         const scrollToTop = () => {
             const position = document.documentElement.scrollTop || document.body.scrollTop;
@@ -53,15 +53,15 @@ export const useGetABlog=()=>{
                         Authorization:localStorage.getItem("token")
                     }
                 });
-                console.log(" response ",response.data);
+                // console.log(" response ",response.data);
                 setBlog(response.data);
                 setLading(false);
             })();
         } catch (err) {
             setLading(false);
             setError(true);
-            console.log("error ",error);
-            console.log("loading ",loading);
+            // console.log("error ",error);
+            // console.log("loading ",loading);
         }
     },[blogid])
     return {loading,blog,error};

@@ -4,7 +4,7 @@ import { jwtDecode } from "jwt-decode";
 import { useSearching } from "../hooks/Searching";
 import { AppBar } from "../components/AppBar";
 import BlogCard from "../components/BlogCard";
-
+import SkeletonScreen from "../components/SkeletonForBlogs";
 
 
 export const SearchingPage = () => {
@@ -36,34 +36,42 @@ export const SearchingPage = () => {
         navigate("/signin");
     }
     const {blogs,loading}=useSearching();
-    // if(error){
-    //     return <div>error occured</div>
-    // }
-    if(loading){
-        return <div>loading...</div>
-    }
     const length:number=blogs?.length;
-
     return (
-        <div>
+        <div className=" bg-gray-50">
             <div>
                 <AppBar userData={userData} imageUrl="" public={false}></AppBar>
             </div>
-            <div className="flex justify-center">
-                <div className="flex ">
-                <div className="">
+            <div className="flex justify-center w-full">
+                <div className="flex w-full">
+                <div className=" w-full">
+                    {loading ? <div className=" w-full ">
+                        <SkeletonScreen></SkeletonScreen>
+                    </div> :<div className=" justify-center">
+                    <div className="flex justify-center bg-white">
+                <div className="flex w-3/4">
+                 <div className="p-5">
                     {(length>0) ?blogs?.map((blog) => (
-                    <BlogCard key={blog.id} blog={blog} state={userData}/>
-                    )):<div className="flex items-center justify-center min-h-screen">
-                    <div className="text-center p-6 bg-slate-50 rounded-md shadow-sm">
-                      <h2 className="text-2xl font-bold text-gray-700 mb-4">No Blogs Found</h2>
-                      <p className="text-gray-600">Try searching with different keywords.</p>
+                        <div className=" bg-slate-100 rounded-md" key={blog.id}>  
+                    <BlogCard blog={blog} state={userData} key={blog.id}/>
+                    </div>)):<></>}
+                  </div>
+                </div>
+                </div>
+                {length==0 ? 
+                   <div>
+                    <div className="flex items-center justify-center h-96 ">
+                    <div className="text-center bg-slate-50 rounded-md shadow-lg">
+                      <h2 className="text-2xl font-bold text-gray-700 mb-3 pt-3 pr-3 pl-3">No Blogs Found</h2>
+                      <p className="text-gray-600 pb-3 pl-3 pr-3">Try searching with different keywords.</p>
                     </div>
-                  </div>}
+                  </div>
+                  <div className=" w-full h-56 bg-gray-50"></div>
+                  </div> : <></>}
+                   </div> }
                 </div>
                 </div>
             </div>
         </div>
     );
 }
-

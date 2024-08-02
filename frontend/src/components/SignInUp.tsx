@@ -24,7 +24,7 @@ export const Auth = ({type}:{type:"signup" | "signin"}) => {
       const jwt = response.data;
     
       localStorage.setItem("token",jwt)
-      console.log(jwt)
+      // console.log(jwt)
 
       navigate("/blogs")
     } catch (error) {

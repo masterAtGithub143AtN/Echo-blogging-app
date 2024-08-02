@@ -1,5 +1,5 @@
 import { jwtDecode } from "jwt-decode";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { Avatar } from "../components/Avatar";
 import { decodedTokenType } from "./PublicProfile";
 import { AppBar } from "../components/AppBar";
@@ -9,6 +9,7 @@ import BlogCard from "../components/BlogCard";
 import { Blog } from "../hooks/GetBlogs";
 import About from "../components/About";
 import { BackendUrl } from "../Config";
+import { PersonalBlogs } from "../components/PersonalBlogs";
 
 export const UserProfile = () => {
   const token = localStorage.getItem("token");
@@ -67,12 +68,26 @@ export const UserProfile = () => {
     );
   }
   const [activePage, setActivePage] = useState('home');
+  const location=useLocation();
   // console.log(userData);
+  useEffect(()=>{
+    const state=location.state;
+    if(state=="PersonalBlog"){
+      setActivePage("PersonalBlog");
+    }
+  },[])
   const renderContent = () => {
     if (activePage === 'home') {
       return <Home username={userData.username} id={userData.id} name={userData.name} />;
     } else if (activePage === 'about') {
       return <About username={userData.username}/>;
+    }
+    else if (activePage === 'PersonalBlog') {
+      return <>
+      <div>
+        <PersonalBlogs></PersonalBlogs>
+      </div>
+      </>
     }
   };
 
@@ -104,6 +119,14 @@ export const UserProfile = () => {
                       onClick={() => setActivePage('about')}
                     >
                       About
+                    </div>
+                  </div>
+                  <div className="text-xl pb-2 pl-5">
+                    <div
+                      className={`cursor-pointer border-b-2 ${activePage === 'PersonalBlog' ? 'border-black' : 'border-transparent'}`}
+                      onClick={() => setActivePage('PersonalBlog')}
+                    >
+                      Your Blogs
                     </div>
                   </div>
                 </div>

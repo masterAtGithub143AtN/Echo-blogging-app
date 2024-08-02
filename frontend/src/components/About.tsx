@@ -44,7 +44,8 @@ const About = ({ username }: AboutProps) => {
       setAbout(aboutText);
       setIsEditing(false);
     } catch (error) {
-      console.error("Error saving about information", error);
+      alert('msg: Error saving about information try again');
+      // console.error("Error saving about information", error);
     }
   };
 

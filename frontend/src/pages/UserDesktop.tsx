@@ -5,6 +5,8 @@ import { AppBar } from "../components/AppBar";
 import { useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 import { decodedTokenType } from "./PublicProfile";
+import SkeletonScreen from "../components/SkeletonForBlogs";
+import { SkeletonForAppBar } from "../components/SkeletonForAppBar";
 
 
 
@@ -36,9 +38,11 @@ export const UserDesktop = () => {
   }, [userData, navigate]);
 
   const { loading, blogs } = useBlogs();
-
   if (loading) {
-    return <div>Loading...</div>;
+    return <div>
+      <SkeletonForAppBar></SkeletonForAppBar>
+      <SkeletonScreen></SkeletonScreen>
+    </div>;
   }
 
   return (
@@ -48,7 +52,9 @@ export const UserDesktop = () => {
         <div className="flex w-3/4">
           <div className="p-5">
             {blogs?.map((blog) => (
+              <div className=" bg-slate-50">
               <BlogCard key={blog.id} blog={blog} state={userData}/>
+              </div>
             ))}
           </div>
         </div>

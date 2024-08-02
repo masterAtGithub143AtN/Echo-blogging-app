@@ -22,9 +22,10 @@ export const useSearching = () => {
     const query = queryParams.get('query') || '';
     const [loading,setLading]=useState(true);
     const [blogs,setBlogs]=useState<Blog[]>([]);
-    console.log("query ",query);
+    // console.log("query ",query);
 
     useEffect(()=>{
+        setLading(true);
         ;(async()=>{
             const response=await axios.get(`${BackendUrl}/blog/search`,{
                 headers:{

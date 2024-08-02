@@ -44,6 +44,7 @@ export const EditProfile = () => {
         semester: "",
         passingyear: "",
         branch: "",
+        about: "",
     });
 
     useEffect(() => {
@@ -58,7 +59,8 @@ export const EditProfile = () => {
                     });
                     setInput(response.data);
                 } catch (error) {
-                    console.error(error);
+                    alert('msg: error while updating try again ', );
+                    // console.error(error);
                 }
             }
             fetchUserDetails();
@@ -81,12 +83,13 @@ export const EditProfile = () => {
                 },
             });
             if (response.status === 200) {
-                console.log("User updated successfully");
+                // console.log("User updated successfully");
                 localStorage.setItem("token", response.data.token);
                 navigate(`/blog/${input.username}`, { state: input });
             }
         } catch (error) {
-            console.error(error);
+            alert('msg: error while updating try again ', );
+            // console.error(error);
         }
     }
 
@@ -184,7 +187,7 @@ export const EditProfile = () => {
                      id="about"
                         placeholder="Write about yourself"
                             className="w-full h-24 p-2 border border-blue-400 rounded-md"
-                            value={input.about}
+                            value={input.about ||""}
                             onChange={(e) => setInput({ ...input, about: e.target.value })}
                         />
                     </div>

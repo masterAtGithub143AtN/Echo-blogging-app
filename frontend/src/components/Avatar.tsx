@@ -6,6 +6,7 @@ interface AvatarProps {
     username: string;
     size: "small" | "medium" | "large";
     public?: boolean | false;
+    //link is for the profile page when we need only profile type image without any link
     link?: boolean | true;
 }
 

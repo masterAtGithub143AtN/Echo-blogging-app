@@ -13,7 +13,7 @@ export const ReadingComponent = () => {
     }
     
    
-    {console.log(error)}
+    
     if(loading){
         return <div>loading...
             <div >

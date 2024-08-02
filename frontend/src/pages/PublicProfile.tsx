@@ -3,6 +3,10 @@ import { AppBar } from "../components/AppBar"
 import { jwtDecode } from "jwt-decode"
 import BlogCard from "../components/BlogCard";
 import { usePublicDetails } from "../hooks/GetPublicDetails";
+import { useEffect, useState } from "react";
+import { SkeletonForAppBar } from "../components/SkeletonForAppBar";
+import SkeletonScreen from "../components/SkeletonForBlogs";
+import SkeletonElement from "../components/SkeletonElement";
 
 
 
@@ -15,6 +19,7 @@ export interface decodedTokenType{
 
 export const PublicProfile = () => {
     const navigate=useNavigate();
+    const [aboutMe,setAboutMe]=useState<string>("");
 
     const token=localStorage.getItem("token");
     if(token===null){
@@ -49,7 +54,28 @@ export const PublicProfile = () => {
         return <div>error occured</div>
     }
     if(loading){
-        return <div>loading...</div>
+        return <div>
+            <div className=" w-full">
+                <SkeletonForAppBar></SkeletonForAppBar>
+            </div>
+         <div className=" grid grid-cols-10 ">
+         <div className=" col-span-7 bg-white">
+                <div className=" flex flex-col justify-center">
+                    <div className=" flex flex-row justify-center">
+                        <div className="w-3/4 pt-8 h-32">
+                             <SkeletonElement width="100%" height="100%"></SkeletonElement>
+                            <div>
+                               <SkeletonScreen></SkeletonScreen>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className=" col-span-3 shadow-sm bg-slate-50 h-screen">
+                <SkeletonElement width="100%" height="100%"></SkeletonElement>
+            </div>
+         </div>
+        </div>
     }
     const blogsWithAuthor = publicDetails.blogs.map(blog => ({
         ...blog,
@@ -60,10 +86,11 @@ export const PublicProfile = () => {
         imageUrl: "",
       }));
       
-
-    return (
+        return (
         <div>
-            <AppBar userData={userData} imageUrl={""} public={false}></AppBar>
+            <div className=" w-full">
+                <AppBar userData={userData} imageUrl={""} public={false}></AppBar>
+            </div>
          <div className=" grid grid-cols-10 ">
          <div className=" col-span-7 bg-white">
                 <div className=" flex flex-col justify-center">
@@ -95,13 +122,13 @@ export const PublicProfile = () => {
             <div className=" col-span-3 shadow-sm bg-slate-50">
                 <div className=" flex flex-col justify-center pt-10">
                     
-                <div className=" flex flex-row justify-center">
+                <div className=" flex flex-row justify-center mt-24">
                 <div className="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
-                    <svg className="absolute w-12 h-12 text-gray-400 -left-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
+                    <svg className="absolute w-12 h-12 text-gray-400 -left-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd"></path></svg>
                 </div>
                 </div>
                 <div className=" flex justify-center mt-9">
-                    <div>About me</div>
+                    <div className=" ml-5">{publicDetails.about || "Welcome to my profile"}</div>
                 </div>
                 </div>
             </div>

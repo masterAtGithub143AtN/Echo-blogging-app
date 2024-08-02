@@ -12,6 +12,8 @@ import { NotificationPage } from './pages/NotificationPage'
 import { EditProfile } from './pages/EditProfile'
 import { SearchingPage } from './pages/SearchingPage'
 import { Home } from './pages/Home'
+import { EditBlog } from './pages/EditBlog'
+import { ChangePassword } from './pages/ChangePassword'
 
 function App() {
 
@@ -30,6 +32,8 @@ function App() {
           <Route path='/:username/notification' element={<NotificationPage></NotificationPage>} />
           <Route path='/profile/:username/edit' element={<EditProfile></EditProfile>}></Route>
           <Route path="/search" element={<SearchingPage></SearchingPage>} />
+          <Route path='/:username/blog/:blogid/edit' element={<EditBlog></EditBlog>}></Route>
+          <Route path='/:username/changepassword' element={<ChangePassword></ChangePassword>}></Route>
         </Routes>
       </BrowserRouter>
     </>

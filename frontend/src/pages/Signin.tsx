@@ -23,14 +23,14 @@ export const Signin = () => {
                 alert("Invalid input");
                 return;
             }
-            console.log(success);
+            // console.log(success);
             const response=await axios.post(`${BackendUrl}/user/signin`,input);
             localStorage.setItem("token",response.data.token);
             const userData=jwtDecode(response.data.token);
             // const userData={username: "saket_12"};
             navigate(`/blog/${input.username}`,{state:userData});
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             alert("Invalid username or password");
         }
     }

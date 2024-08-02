@@ -25,6 +25,7 @@ export interface PublicDetails {
     content:string;
     date:string;
   }[];
+  about:string;
 }
 
 export const usePublicDetails = () => {
@@ -36,6 +37,7 @@ export const usePublicDetails = () => {
     name: "",
     profile: "",
     blogs: [],
+    about:"",
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);

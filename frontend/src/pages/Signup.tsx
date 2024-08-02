@@ -24,7 +24,7 @@ export const Signup = () => {
     })
 
     async function senRequest(){
-        console.log(signupInput);
+        // console.log(signupInput);
         try {
             const {success}=signupInput.safeParse(input);
             if(!success){
@@ -33,10 +33,11 @@ export const Signup = () => {
             }
             const response = await axios.post(`${BackendUrl}/user/signup`,input);
             localStorage.setItem("token",response.data.token);
-            console.log("User created successfully");
+            // console.log("User created successfully");
             navigate(`/blog/${input.username}`,{state:input});
         } catch (error) {
-            console.log(error);
+            alert('msg: Error creating user please try again');
+            // console.log(error);
         }
     }
   
