@@ -1,5 +1,5 @@
 
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Avatar } from './Avatar';
 import Notification from './Notification';
 import SearchForm from "./SearchForm";

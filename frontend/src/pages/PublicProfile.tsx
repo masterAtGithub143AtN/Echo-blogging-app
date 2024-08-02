@@ -3,7 +3,6 @@ import { AppBar } from "../components/AppBar"
 import { jwtDecode } from "jwt-decode"
 import BlogCard from "../components/BlogCard";
 import { usePublicDetails } from "../hooks/GetPublicDetails";
-import { useEffect, useState } from "react";
 import { SkeletonForAppBar } from "../components/SkeletonForAppBar";
 import SkeletonScreen from "../components/SkeletonForBlogs";
 import SkeletonElement from "../components/SkeletonElement";
@@ -19,7 +18,6 @@ export interface decodedTokenType{
 
 export const PublicProfile = () => {
     const navigate=useNavigate();
-    const [aboutMe,setAboutMe]=useState<string>("");
 
     const token=localStorage.getItem("token");
     if(token===null){
