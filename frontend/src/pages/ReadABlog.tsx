@@ -15,7 +15,7 @@ export const ReadABlog = () => {
             <h1 className="text-4xl font-bold mb-4 text-gray-800">Welcome!</h1>
             <p className="text-lg mb-6 text-gray-600">Please choose an option to continue</p>
             <div className="space-x-4">
-              <Link to="/home">
+              <Link to="/">
                 <button className="px-6 py-3 bg-blue-500 text-white rounded-lg shadow-lg hover:bg-blue-600 transition duration-200">
                   Home
                 </button>
