@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { BlogCard } from "../components/BlogCard";
 import { useBlogs } from "../hooks/GetBlogs";
 import { AppBar } from "../components/AppBar";
@@ -26,7 +26,7 @@ export const UserDesktop = () => {
       navigate("/signin");
       return;
     }
-    if(userData && btoken){
+    if(userData!=null && userData!=undefined && btoken){
       const decodedToken:decodedTokenType=jwtDecode(btoken);
       if(userData.username !== decodedToken.username){
         navigate("/signin");
@@ -48,9 +48,19 @@ export const UserDesktop = () => {
       userData.name=userData1.name;
       userData.id=userData1.id;
       }
+      const {username}=useParams<{username:string}>();
+      if(username!=userData.username){
+        navigate("/signin");
+        return;
+      }
     }
     ;(async()=>{
-      const response=await axios.post(`${BackendUrl}/user/verify/${userData.username || userData1.username}`)
+      const {username}=useParams<{username:string}>();
+      const response=await axios.post(`${BackendUrl}/user/verify/${username}`,{
+        headers:{
+          Authorization:localStorage.getItem("token")
+        }
+      })
       if(response.data==false){
         navigate("/signin");
       }
