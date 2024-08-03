@@ -6,6 +6,7 @@ import { usePublicDetails } from "../hooks/GetPublicDetails";
 import { SkeletonForAppBar } from "../components/SkeletonForAppBar";
 import SkeletonScreen from "../components/SkeletonForBlogs";
 import SkeletonElement from "../components/SkeletonElement";
+import { useEffect } from "react";
 
 
 
@@ -23,29 +24,35 @@ export const PublicProfile = () => {
     if(token===null){
       return <>
       <div>
-        <div className=" flex flex-col justify-center  h-screen">
-            <div className=" flex flex-row justify-center text-green-200">
-                <div className=" text-2xl font-semibold ">
-
-                <div>
-                    <div>Please sign in to view this page</div>
-                    <Link to={"/signin"}>
-                    <div className=" text-2xl">Click</div>
-                    </Link>
-                    <div>Here to signin</div>
-                </div>
-                </div>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-gray-400 to-slate-700">
+          <div className="text-center p-10 bg-white rounded-xl shadow-lg">
+            <h1 className="text-4xl font-bold mb-4 text-gray-800">Welcome!</h1>
+            <p className="text-lg mb-6 text-gray-600">Please choose an option to continue</p>
+            <div className="space-x-4">
+              <Link to="/home">
+                <button className="px-6 py-3 bg-blue-500 text-white rounded-lg shadow-lg hover:bg-blue-600 transition duration-200">
+                  Home
+                </button>
+              </Link>
+              <Link to="/signin">
+                <button className="px-6 py-3 bg-green-500 text-white rounded-lg shadow-lg hover:bg-green-600 transition duration-200">
+                  Sign In
+                </button>
+              </Link>
             </div>
+          </div>
         </div>
       </div>
       </>
     }
     const userData:decodedTokenType=jwtDecode(token);
-    if(userData.username==null){
-        alert('not username in token');
-        navigate("/signin");
-    }
-
+    useEffect(()=>{
+        if(userData.username==null){
+            alert('not username in token');
+            navigate("/signin");
+        }
+    
+    },[]);
 
     const {publicDetails,loading,error}=usePublicDetails();
     if(error){

@@ -15,17 +15,24 @@ export const UserDesktop = () => {
   const location = useLocation();
   const userData= location.state;
   const btoken=localStorage.getItem("token");
-  if(btoken==null){
-    navigate("/signin");
-  }
-  if(userData && btoken){
-    const decodedToken:decodedTokenType=jwtDecode(btoken);
-    if(userData.username !== decodedToken.username){
-      navigate("/signin");
-    }
-  }
+  
   let userData1 ;
   useEffect(() => {
+
+
+    if(btoken==null){
+      navigate("/signin");
+      return;
+    }
+    if(userData && btoken){
+      const decodedToken:decodedTokenType=jwtDecode(btoken);
+      if(userData.username !== decodedToken.username){
+        navigate("/signin");
+      }
+    }
+
+
+
     if (!userData) {
       const token = localStorage.getItem("token");
       if (!token) {

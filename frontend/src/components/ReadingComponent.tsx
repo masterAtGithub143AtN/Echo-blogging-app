@@ -2,6 +2,8 @@ import { Link, useLocation  } from "react-router-dom"
 import { Avatar } from "./Avatar"
 import { useGetABlog } from "../hooks/GetABlog"
 import { AppBar } from "./AppBar";
+import { SkeletonForAppBar } from "./SkeletonForAppBar";
+import SkeletonScreen from "./SkeletonForBlogs";
 
 
 
@@ -15,9 +17,14 @@ export const ReadingComponent = () => {
    
     
     if(loading){
-        return <div>loading...
-            <div >
-
+        return <div>
+            <div className=" w-full h-screen" >
+                <div>
+                <SkeletonForAppBar></SkeletonForAppBar>
+                </div>
+                <div className=" w-full h-auto">
+                    <SkeletonScreen></SkeletonScreen>
+                </div>
             </div>
         </div>
     }
