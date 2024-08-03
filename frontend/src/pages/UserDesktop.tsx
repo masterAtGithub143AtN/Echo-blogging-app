@@ -49,6 +49,9 @@ export const UserDesktop = () => {
       userData.id=userData1.id;
       }
       const {username}=useParams<{username:string}>();
+      console.log(userData);
+      console.log(userData1);
+      console.log(username);
       if(username!=userData.username){
         navigate("/signin");
         return;
