@@ -7,6 +7,8 @@ import { jwtDecode } from "jwt-decode";
 import { decodedTokenType } from "./PublicProfile";
 import SkeletonScreen from "../components/SkeletonForBlogs";
 import { SkeletonForAppBar } from "../components/SkeletonForAppBar";
+import axios from "axios";
+import { BackendUrl } from "../Config";
 
 
 
@@ -16,7 +18,7 @@ export const UserDesktop = () => {
   const userData= location.state;
   const btoken=localStorage.getItem("token");
   
-  let userData1 ;
+  let userData1:decodedTokenType;
   useEffect(() => {
 
 
@@ -28,6 +30,7 @@ export const UserDesktop = () => {
       const decodedToken:decodedTokenType=jwtDecode(btoken);
       if(userData.username !== decodedToken.username){
         navigate("/signin");
+        return;
       }
     }
 
@@ -37,11 +40,21 @@ export const UserDesktop = () => {
       const token = localStorage.getItem("token");
       if (!token) {
         navigate("/signin");
+        return;
       }
       if(token){
       userData1= jwtDecode(token);
+      userData.username=userData1.username;
+      userData.name=userData1.name;
+      userData.id=userData1.id;
       }
     }
+    ;(async()=>{
+      const response=await axios.post(`${BackendUrl}/user/verify/${userData.username || userData1.username}`)
+      if(response.data==false){
+        navigate("/signin");
+      }
+    })();
   }, [userData, navigate]);
 
   const { loading, blogs } = useBlogs();
@@ -54,7 +67,7 @@ export const UserDesktop = () => {
 
   return (
     <div>
-      <AppBar userData={userData?userData:userData1} imageUrl="/image/saket" fromwhere="userDesktop" public={false} />
+      <AppBar userData={userData} imageUrl="/image/saket" fromwhere="userDesktop" public={false} />
       <div className="flex justify-center">
         <div className="flex w-3/4">
           <div className="p-5">

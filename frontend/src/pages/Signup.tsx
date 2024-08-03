@@ -48,7 +48,7 @@ export const Signup = () => {
                <div className=" flex flex-col justify-center">
                    
                     <div className=" flex justify-center shadow-md bg-slate-400 rounded-md">
-                    <div className=" flex flex-col justify-center w-max h-max m-4">
+                    <div className=" flex flex-col justify-center w-4/5 md:w-max h-max m-4">
                     <div>
                         <InputBox type="text" placeholder="username_12" message="UserName *" onchange={(e)=>{
                             setInput({...input,username:e.target.value})
@@ -108,6 +108,7 @@ export const Signup = () => {
                 </div>
            </div>
             <div>
+                
                 <Qoute />
             </div>
         </div>

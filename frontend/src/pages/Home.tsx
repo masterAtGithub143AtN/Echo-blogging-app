@@ -5,11 +5,13 @@ import { jwtDecode } from "jwt-decode";
 import { useBlogs } from "../hooks/GetBlogs";
 import { AppBar } from "../components/AppBar";
 import BlogCard from "../components/BlogCard";
+import { SkeletonForAppBar } from "../components/SkeletonForAppBar";
+import SkeletonScreen from "../components/SkeletonForBlogs";
 
 
 export const Home =()=>{
     const navigate=useNavigate();
-    const {blogs}=useBlogs();
+    const {blogs,loading}=useBlogs();
     useEffect(()=>{
         ;(async()=>{
             const token=localStorage.getItem("token");
@@ -21,6 +23,12 @@ export const Home =()=>{
             }
         })();
     },[])
+    if(loading){
+      return <div>
+      <SkeletonForAppBar></SkeletonForAppBar>
+      <SkeletonScreen></SkeletonScreen>
+    </div>;
+    }
     return(
         <div>
             <div>
