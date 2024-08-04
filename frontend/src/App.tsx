@@ -2,7 +2,6 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Signup } from './pages/Signup'
 import { Signin } from './pages/Signin'
 
-import { UserDesktop } from './pages/UserDesktop'
 import 'normalize.css'
 import { BlogWriting } from './pages/BlogWriting'
 import { ReadABlog } from './pages/ReadABlog'
@@ -14,6 +13,7 @@ import { SearchingPage } from './pages/SearchingPage'
 import { Home } from './pages/Home'
 import { EditBlog } from './pages/EditBlog'
 import { ChangePassword } from './pages/ChangePassword'
+import UserDesktop from './pages/UserDesktop'
 
 function App() {
 
