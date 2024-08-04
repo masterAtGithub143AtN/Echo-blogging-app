@@ -21,15 +21,16 @@ const UserDesktop = () => {
   const location = useLocation();
   const { username } = useParams<{ username: string }>();
   const userData = location.state;
-  const btoken = localStorage.getItem('token');
+  const token = localStorage.getItem('token');
   const [user, setUser] = useState(userData);
 
   useEffect(() => {
-    if (!btoken) {
+    if (!token) {
+      // console.log('No token found');
       return;
     }
 
-    const decodedTokenType: DecodedTokenType = jwtDecode(btoken);
+    const decodedTokenType: DecodedTokenType = jwtDecode(token);
 
     if (!user) {
       setUser({
@@ -40,30 +41,28 @@ const UserDesktop = () => {
     }
 
     if (decodedTokenType.username !== username) {
+      // console.log('User not authorized');
       navigate('/');
-    } else {
-      (async () => {
-        try {
-          const response = await axios.post(`${BackendUrl}/user/verify/${username}`, {
-            headers: {
-              Authorization: btoken,
-            },
-          });
-
-          if (response.data === false) {
-            navigate('/signin');
-          }
-        } catch (error) {
-          console.error('Verification error:', error);
-          navigate('/signin');
-        }
-      })();
     }
-  }, [username, btoken, navigate, user]);
+
+    ;(async()=>{
+      const response=await axios.get(`${BackendUrl}/user/veryfy/${username}`,{
+        headers:{
+          Authorization:token
+        }
+      });
+      if(response.status!==200){
+        navigate('/');
+      }
+      if(response.data.message==false){
+        navigate('/');
+      }
+    })();
+  }, [username, token, navigate, user]);
 
   const { loading, blogs } = useBlogs();
 
-  if (!btoken) {
+  if (!token) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-gray-400 to-slate-700">
         <div className="text-center p-10 bg-white rounded-xl shadow-lg">
