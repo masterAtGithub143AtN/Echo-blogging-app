@@ -1,4 +1,4 @@
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { BlogCard } from "../components/BlogCard";
 import { useBlogs } from "../hooks/GetBlogs";
 import { AppBar } from "../components/AppBar";
@@ -17,46 +17,58 @@ export const UserDesktop = () => {
   const location = useLocation();
   const userData= location.state;
   const btoken=localStorage.getItem("token");
+  if(btoken==null){
+    return <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-gray-400 to-slate-700">
+    <div className="text-center p-10 bg-white rounded-xl shadow-lg">
+      <h1 className="text-4xl font-bold mb-4 text-gray-800">Welcome!</h1>
+      <p className="text-lg mb-6 text-gray-600">Please choose an option to continue</p>
+      <div className="space-x-4">
+        <Link to="/">
+          <button className="px-6 py-3 bg-blue-500 text-white rounded-lg shadow-lg hover:bg-blue-600 transition duration-200">
+            Home
+          </button>
+        </Link>
+        <Link to="/signin">
+          <button className="px-6 py-3 bg-green-500 text-white rounded-lg shadow-lg hover:bg-green-600 transition duration-200">
+            Sign In
+          </button>
+        </Link>
+      </div>
+    </div>
+  </div>
+  }
+
+  const decodedTokenType:decodedTokenType=jwtDecode(btoken);
+  const {username}=useParams<{username:string}>();
+  if(decodedTokenType.username!=username){
+    return <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-gray-400 to-slate-700">
+    <div className="text-center p-10 bg-white rounded-xl shadow-lg">
+      <h1 className="text-4xl font-bold mb-4 text-gray-800">Welcome!</h1>
+      <p className="text-lg mb-6 text-gray-600">You are not Authorized to vist this</p>
+      <p className="text-lg mb-6 text-gray-600">Please choose an option to continue</p>
+      <div className="space-x-4">
+        <Link to="/">
+          <button className="px-6 py-3 bg-blue-500 text-white rounded-lg shadow-lg hover:bg-blue-600 transition duration-200">
+            Home
+          </button>
+        </Link>
+        <Link to="/signin">
+          <button className="px-6 py-3 bg-green-500 text-white rounded-lg shadow-lg hover:bg-green-600 transition duration-200">
+            Sign In
+          </button>
+        </Link>
+      </div>
+    </div>
+  </div>
+  }
+  if(userData==null || userData==undefined){
+    userData.username=decodedTokenType.username;
+    userData.name=decodedTokenType.name;
+    userData.id=decodedTokenType.id;
+  }
   
-  let userData1:decodedTokenType;
   useEffect(() => {
-
-
-    if(btoken==null){
-      navigate("/signin");
-      return;
-    }
-    if(userData!=null && userData!=undefined && btoken){
-      const decodedToken:decodedTokenType=jwtDecode(btoken);
-      if(userData.username !== decodedToken.username){
-        navigate("/signin");
-        return;
-      }
-    }
-
-
-
-    if (!userData) {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        navigate("/signin");
-        return;
-      }
-      if(token){
-      userData1= jwtDecode(token);
-      userData.username=userData1.username;
-      userData.name=userData1.name;
-      userData.id=userData1.id;
-      }
-      const {username}=useParams<{username:string}>();
-      console.log(userData);
-      console.log(userData1);
-      console.log(username);
-      if(username!=userData.username){
-        navigate("/signin");
-        return;
-      }
-    }
+    
     ;(async()=>{
       const {username}=useParams<{username:string}>();
       const response=await axios.post(`${BackendUrl}/user/verify/${username}`,{
@@ -68,7 +80,7 @@ export const UserDesktop = () => {
         navigate("/signin");
       }
     })();
-  }, [userData, navigate]);
+  }, [userData]);
 
   const { loading, blogs } = useBlogs();
   if (loading) {
@@ -85,8 +97,8 @@ export const UserDesktop = () => {
         <div className="flex w-3/4">
           <div className="p-5">
             {blogs?.map((blog) => (
-              <div className=" bg-slate-50">
-              <BlogCard key={blog.id} blog={blog} state={userData}/>
+              <div className=" bg-slate-50" key={blog.id}>
+              <BlogCard  blog={blog} state={userData}/>
               </div>
             ))}
           </div>
