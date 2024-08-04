@@ -199,7 +199,7 @@ useEffect(() => {
                                     </li>
                                     <li className=''>
                                         <Link
-                                            to={`/profile/${props.userData?.username}/edit`} state={props.userData}
+                                            to={`/${props.userData?.username}/changepassword`} state={props.userData}
                                             className="flex flex-row justify-center "
                                             onClick={() => setIsMenuOpen(false)}
                                         >
