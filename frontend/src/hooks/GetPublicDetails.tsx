@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { BackendUrl } from "../Config";
 
 export interface Blog {
   id: number;
@@ -29,6 +28,7 @@ export interface PublicDetails {
 }
 
 export const usePublicDetails = () => {
+  const BackendUrl = process.env.REACT_APP_BACKEND_URL;
   const { username } = useParams<{ username: string }>();
 
   const [publicDetails, setPublicDetails] = useState<PublicDetails>({

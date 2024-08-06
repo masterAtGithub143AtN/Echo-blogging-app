@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { BackendUrl } from "../Config";
 
 export interface Blog{
     id:number;
@@ -17,6 +16,7 @@ export interface Blog{
 
 
 export const useSearching = () => {
+    const BackendUrl = process.env.REACT_APP_BACKEND_URL;
     const { search } = useLocation();
     const queryParams = new URLSearchParams(search);
     const query = queryParams.get('query') || '';

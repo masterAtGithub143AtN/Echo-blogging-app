@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom";
-import { BackendUrl } from "../Config";
 
 interface Blog{
     id:number;
@@ -16,6 +15,7 @@ interface Blog{
 }
 
 export const useGetABlog=()=>{
+    const BackendUrl=process.env.REACT_APP_BACKEND_URL;
     const {blogid}=useParams<{blogid:string}>();
     const [loading,setLading]=useState(true);
     const [blog,setBlog]=useState<Blog>({
