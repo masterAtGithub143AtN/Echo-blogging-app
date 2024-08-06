@@ -6,7 +6,7 @@ interface AboutProps {
 }
 
 const About = ({ username }: AboutProps) => {
-  const BackendUrl=process.env.REACT_APP_BACKEND_URL;
+  const BackendUrl = import.meta.env.VITE_APP_BACKEND_URL;
   const [about, setAbout] = useState<string>("");
   const [isGetAbout, setIsGetAbout] = useState<boolean>(true);
   const [isEditing, setIsEditing] = useState<boolean>(false);

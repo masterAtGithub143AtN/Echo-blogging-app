@@ -5,7 +5,7 @@ import axios from "axios";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AppBar } from "../components/AppBar";
 export const BlogWriting = () => {
-  const BackendUrl=process.env.REACT_APP_BACKEND_URL;
+  const BackendUrl = import.meta.env.VITE_APP_BACKEND_URL;
     const location=useLocation();
     const userData=location.state;
     if(!userData){

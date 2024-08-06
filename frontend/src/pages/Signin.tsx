@@ -9,7 +9,7 @@ import { signinInput } from '@saket_12/medium-common'
 import { jwtDecode } from 'jwt-decode'
 
 export const Signin = () => {
-    const BackendUrl=process.env.REACT_APP_BACKEND_URL;
+    const BackendUrl = import.meta.env.VITE_APP_BACKEND_URL;
     
     const navigate=useNavigate();
     const [input, setInput] =useState({

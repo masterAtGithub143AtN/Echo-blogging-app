@@ -13,9 +13,10 @@ export interface Blog{
 }
 
 export const useBlogs=()=>{
-    const BackendUrl=process.env.REACT_APP_BACKEND_URL;
+    const BackendUrl = import.meta.env.VITE_APP_BACKEND_URL;
+    
     const [loading,setLading]=useState(true);
-    const [blogs,setBlogs]=useState<Blog[]>();
+    const [blogs,setBlogs]=useState<Blog[]>([]);
 
     useEffect(()=>{
         ;(async()=>{

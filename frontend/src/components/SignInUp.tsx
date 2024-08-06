@@ -10,7 +10,7 @@ interface SignupInput {
 }
 
 export const Auth = ({type}:{type:"signup" | "signin"}) => {
-  const BackendUrl=process.env.REACT_APP_BACKEND_URL;
+  const BackendUrl = import.meta.env.VITE_APP_BACKEND_URL;
   const navigate= useNavigate();
   const [postInputs,setPostInputs]  = useState<SignupInput>({
     name:"",

@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom"
 
 
 export const Signup = () => {
-    const BackendUrl=process.env.REACT_APP_BACKEND_URL;
+    const BackendUrl = import.meta.env.VITE_APP_BACKEND_URL;
     const navigate=useNavigate();
     const [input, setInput] = useState<SignupInput>({
         username: "",

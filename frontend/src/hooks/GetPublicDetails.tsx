@@ -28,7 +28,7 @@ export interface PublicDetails {
 }
 
 export const usePublicDetails = () => {
-  const BackendUrl = process.env.REACT_APP_BACKEND_URL;
+  const BackendUrl = import.meta.env.VITE_APP_BACKEND_URL;
   const { username } = useParams<{ username: string }>();
 
   const [publicDetails, setPublicDetails] = useState<PublicDetails>({

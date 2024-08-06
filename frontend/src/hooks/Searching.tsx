@@ -16,7 +16,7 @@ export interface Blog{
 
 
 export const useSearching = () => {
-    const BackendUrl = process.env.REACT_APP_BACKEND_URL;
+    const BackendUrl = import.meta.env.VITE_APP_BACKEND_URL;
     const { search } = useLocation();
     const queryParams = new URLSearchParams(search);
     const query = queryParams.get('query') || '';

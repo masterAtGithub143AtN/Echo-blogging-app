@@ -15,7 +15,7 @@ interface Blog{
 }
 
 export const useGetABlog=()=>{
-    const BackendUrl=process.env.REACT_APP_BACKEND_URL;
+    const BackendUrl = import.meta.env.VITE_APP_BACKEND_URL;
     const {blogid}=useParams<{blogid:string}>();
     const [loading,setLading]=useState(true);
     const [blog,setBlog]=useState<Blog>({

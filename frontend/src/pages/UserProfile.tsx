@@ -215,11 +215,11 @@ export interface favoriteBlog{
 
 
 const Home = (props:any) => {
+  const BackendUrl = import.meta.env.VITE_APP_BACKEND_URL;
   const [favoriteBlogs, setFavoriteBlogs] = useState<favoriteBlog[]>();
   useEffect(()=>{
     ;(async()=>{
       try {
-        const BackendUrl=process.env.REACT_APP_BACKEND_URL;
         const response=await axios.get(`${BackendUrl}/blog/get/favorite/${props.username}`,{
           headers:{
             Authorization:localStorage.getItem("token")

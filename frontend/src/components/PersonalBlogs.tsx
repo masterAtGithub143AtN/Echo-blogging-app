@@ -9,7 +9,7 @@ import SkeletonScreen from "./SkeletonForBlogs";
 
 
 export const PersonalBlogs = () => {
-    const BackendUrl=process.env.REACT_APP_BACKEND_URL;
+    const BackendUrl = import.meta.env.VITE_APP_BACKEND_URL;
     const token = localStorage.getItem("token");
     if (token === null) {
         return (

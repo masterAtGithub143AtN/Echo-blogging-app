@@ -10,7 +10,7 @@ import { SkeletonForAppBar } from "../components/SkeletonForAppBar";
 import SkeletonElement from "../components/SkeletonElement";
 
 export const EditBlog = () => {
-  const BackendUrl=process.env.REACT_APP_BACKEND_URL;
+  const BackendUrl = import.meta.env.VITE_APP_BACKEND_URL;
     const location=useLocation();
     const userData=location.state;
     const token = localStorage.getItem("token");

@@ -11,6 +11,7 @@ import SkeletonScreen from "../components/SkeletonForBlogs";
 
 export const Home =()=>{
     const navigate=useNavigate();
+    
     const {blogs,loading}=useBlogs();
     useEffect(()=>{
         ;(async()=>{
