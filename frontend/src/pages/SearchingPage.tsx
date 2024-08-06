@@ -49,10 +49,10 @@ export const SearchingPage = () => {
                         <SkeletonScreen></SkeletonScreen>
                     </div> :<div className=" justify-center">
                     <div className="flex justify-center bg-white">
-                <div className="flex w-3/4">
-                 <div className="p-5">
+                <div className="flex w-full sm:w-3/4">
+                 <div className="sm:p-5">
                     {(length>0) ?blogs?.map((blog) => (
-                        <div className=" bg-slate-100 rounded-md" key={blog.id}>  
+                        <div className=" bg-slate-100 rounded-md mx-3 sm:mx-0" key={blog.id}>  
                     <BlogCard blog={blog} state={userData} key={blog.id}/>
                     </div>)):<></>}
                   </div>

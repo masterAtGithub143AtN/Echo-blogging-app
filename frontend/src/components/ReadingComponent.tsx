@@ -35,7 +35,7 @@ export const ReadingComponent = () => {
             <AppBar userData={userData} imageUrl="/s" fromwhere="userDesktop" public={false}></AppBar>
         </div>
         <div className=" flex justify-center">
-        <div className="felx justify-center w-1/2">
+        <div className="felx justify-center mx-1 sm:mx-0 w-full sm:w-2/3 xl:w-1/2">
             <div className=" flex flex-col justify-center">
                     <div className="flex  flex-col w-full h-max p-3 py-5 shadow-sm rounded-md my-5 ">
                         <div className=" text-2xl font-semibold">{blog.title}</div>

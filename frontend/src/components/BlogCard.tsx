@@ -16,7 +16,7 @@ export const BlogCard: React.FC<BlogCardProps> = ({ blog,state,editable }) => {
   const length_of_reading = Math.ceil(blog.content.length / 100);
   // console.log("blog ",blog);
   return (
-    <div className="shadow-sm rounded-md p-3 my-10">
+    <div className="shadow-sm rounded-md my-8 sm:p-3 sm:my-10">
       <div className="flex justify-center w-max my-2">
         <Avatar size="small" username={blog.author.username} public={true} />
         <Link to={`/public/${blog.author.username}`}>

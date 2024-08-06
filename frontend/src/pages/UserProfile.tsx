@@ -115,12 +115,12 @@ export const UserProfile = () => {
         <div className="grid grid-cols-12 h-screen">
           <div className="col-span-7 bg-slate-50">
             <div className="flex flex-col justify-center h-max shadow-md">
-              <div className="flex flex-col ml-20">
+              <div className="flex flex-col ml-3 sm:ml-20">
                 <div className="flex flex-col justify-center">
                   <div className="text-3xl font-medium my-16">{userData.name}</div>
                 </div>
                 <div className="flex">
-                  <div className="text-xl pr-3 pb-2">
+                  <div className="text-xl pr-1 sm:pr-3 pb-1 sm:pb-2">
                     <div
                       className={`cursor-pointer border-b-2 ${activePage === 'home' ? 'border-black' : 'border-transparent'}`}
                       onClick={() => setActivePage('home')}
@@ -128,7 +128,7 @@ export const UserProfile = () => {
                       Home
                     </div>
                   </div>
-                  <div className="text-xl pb-2 pl-2">
+                  <div className="text-xl pb-1 sm:pb-2 pl-3">
                     <div
                       className={`cursor-pointer border-b-2 ${activePage === 'about' ? 'border-black' : 'border-transparent'}`}
                       onClick={() => setActivePage('about')}
@@ -136,7 +136,7 @@ export const UserProfile = () => {
                       About
                     </div>
                   </div>
-                  <div className="text-xl pb-2 pl-5">
+                  <div className="text-xl pb-1 sm:pb-2 pl-3  sm:pl-5">
                     <div
                       className={`cursor-pointer border-b-2 ${activePage === 'PersonalBlog' ? 'border-black' : 'border-transparent'}`}
                       onClick={() => setActivePage('PersonalBlog')}
@@ -147,7 +147,7 @@ export const UserProfile = () => {
                 </div>
               </div>
             </div>
-                <div className="mt-4 ml-20 mr-1">
+                <div className=" ml-2 sm:ml-20">
                   {renderContent()}
                 </div>
           </div>

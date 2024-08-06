@@ -113,8 +113,8 @@ export const BlogWriting = () => {
             <AppBar userData={userData} imageUrl="/image/saket" public={false} fromwhere="Blogwriting"></AppBar>
         </div>
       {loading==false?<div className="flex justify-center">
-        <div className="flex flex-col justify-center w-1/2">
-          <div className="flex justify-center shadow p-3 my-5 rounded-lg">
+        <div className="flex flex-col justify-center w-full mx-3 sm:mx-0 sm:w-1/2">
+          <div className="flex justify-center shadow sm:p-3 my-10 rounded-lg">
             <AutoResizingTextarea
               message="Title"
               placeholder="Give title to your story"

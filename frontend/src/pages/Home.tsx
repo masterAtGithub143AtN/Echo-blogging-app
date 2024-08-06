@@ -35,8 +35,8 @@ export const Home =()=>{
                 <AppBar loggedIn={false}></AppBar>
             </div>
             <div className="flex justify-center">
-        <div className="flex w-3/4">
-          <div className="p-5">
+        <div className="flex w-full sm:w-3/4">
+          <div className="mx-3 sm:mx-0 sm:p-5">
             {blogs?.map((blog) => (
              
               <BlogCard key={blog.id} blog={blog}/>

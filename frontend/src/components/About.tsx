@@ -50,7 +50,7 @@ const About = ({ username }: AboutProps) => {
   };
 
   return (
-    <div className="bg-stone-100 p-10">
+    <div className=" p-2 sm:p-10">
       {isEditing ? (
         <div className="flex flex-col justify-center">
           <textarea

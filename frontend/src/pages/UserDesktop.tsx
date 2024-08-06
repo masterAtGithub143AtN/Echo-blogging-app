@@ -122,10 +122,10 @@ const UserDesktop = () => {
     <div>
       <AppBar userData={userData} imageUrl="/image/saket" fromwhere="userDesktop" public={false} />
       <div className="flex justify-center">
-        <div className="flex w-3/4">
-          <div className="p-5">
+        <div className="flex w-full sm:w-3/4">
+          <div className="sm:p-5">
             {blogs?.map((blog) => (
-              <div className=" bg-slate-50" key={blog.id}>
+              <div className=" bg-slate-50 mx-3 sm:mx-0" key={blog.id}>
               <BlogCard  blog={blog} state={userData}/>
               </div>
             ))}
