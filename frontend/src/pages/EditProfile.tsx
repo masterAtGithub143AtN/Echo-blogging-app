@@ -6,9 +6,9 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { AppBar } from "../components/AppBar";
 import { jwtDecode } from "jwt-decode";
 import { decodedTokenType } from "./PublicProfile";
-import { BackendUrl } from "../Config";
 
 export const EditProfile = () => {
+    const BackendUrl=process.env.REACT_APP_BACKEND_URL;
     const token = localStorage.getItem("token");
     const navigate = useNavigate();
     if (!token) {

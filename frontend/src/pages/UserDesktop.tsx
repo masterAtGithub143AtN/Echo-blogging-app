@@ -7,7 +7,6 @@ import { SkeletonForAppBar } from '../components/SkeletonForAppBar';
 import SkeletonScreen from '../components/SkeletonForBlogs';
 import { AppBar } from '../components/AppBar';
 import { useBlogs } from '../hooks/GetBlogs';
-import { BackendUrl } from '../Config';
 import BlogCard from '../components/BlogCard';
 
 interface DecodedTokenType {
@@ -17,6 +16,7 @@ interface DecodedTokenType {
 }
 
 const UserDesktop = () => {
+  const BackendUrl=process.env.REACT_APP_BACKEND_URL;
   const navigate = useNavigate();
   const location = useLocation();
   const { username } = useParams<{ username: string }>();

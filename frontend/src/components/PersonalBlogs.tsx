@@ -5,11 +5,11 @@ import { Link } from "react-router-dom";
 import { decodedTokenType } from "../pages/PublicProfile";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
-import { BackendUrl } from "../Config";
 import SkeletonScreen from "./SkeletonForBlogs";
 
 
 export const PersonalBlogs = () => {
+    const BackendUrl=process.env.REACT_APP_BACKEND_URL;
     const token = localStorage.getItem("token");
     if (token === null) {
         return (

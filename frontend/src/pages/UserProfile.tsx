@@ -8,7 +8,6 @@ import axios from "axios";
 import BlogCard from "../components/BlogCard";
 import { Blog } from "../hooks/GetBlogs";
 import About from "../components/About";
-import { BackendUrl } from "../Config";
 import { PersonalBlogs } from "../components/PersonalBlogs";
 
 export const UserProfile = () => {
@@ -220,6 +219,7 @@ const Home = (props:any) => {
   useEffect(()=>{
     ;(async()=>{
       try {
+        const BackendUrl=process.env.REACT_APP_BACKEND_URL;
         const response=await axios.get(`${BackendUrl}/blog/get/favorite/${props.username}`,{
           headers:{
             Authorization:localStorage.getItem("token")

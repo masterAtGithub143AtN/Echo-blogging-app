@@ -6,10 +6,10 @@ import { SignupInput,signupInput } from "@saket_12/medium-common"
 import { Heading } from "../components/Heading"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
-import { BackendUrl } from "../Config"
 
 
 export const Signup = () => {
+    const BackendUrl=process.env.REACT_APP_BACKEND_URL;
     const navigate=useNavigate();
     const [input, setInput] = useState<SignupInput>({
         username: "",

@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { BackendUrl } from "../Config";
 
 interface AboutProps {
   username: string;
 }
 
 const About = ({ username }: AboutProps) => {
+  const BackendUrl=process.env.REACT_APP_BACKEND_URL;
   const [about, setAbout] = useState<string>("");
   const [isGetAbout, setIsGetAbout] = useState<boolean>(true);
   const [isEditing, setIsEditing] = useState<boolean>(false);

@@ -4,13 +4,13 @@ import { blogCreateInput } from "@saket_12/medium-common";
 import axios from "axios";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { AppBar } from "../components/AppBar";
-import { BackendUrl } from "../Config";
 import { decodedTokenType } from "./PublicProfile";
 import { jwtDecode } from "jwt-decode";
 import { SkeletonForAppBar } from "../components/SkeletonForAppBar";
 import SkeletonElement from "../components/SkeletonElement";
 
 export const EditBlog = () => {
+  const BackendUrl=process.env.REACT_APP_BACKEND_URL;
     const location=useLocation();
     const userData=location.state;
     const token = localStorage.getItem("token");

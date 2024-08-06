@@ -4,9 +4,9 @@ import { AppBar } from '../components/AppBar';
 import axios from 'axios';
 import { decodedTokenType } from './PublicProfile';
 import { jwtDecode } from 'jwt-decode';
-import { BackendUrl } from '../Config';
 
 export const ChangePassword: React.FC = () => {
+    const BackendUrl=process.env.REACT_APP_BACKEND_URL;
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
 

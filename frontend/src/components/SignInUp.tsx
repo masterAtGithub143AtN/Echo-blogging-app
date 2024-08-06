@@ -2,7 +2,6 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import axios from "axios"
-import { BackendUrl } from "../Config";
 
 interface SignupInput {
     name: string;
@@ -11,6 +10,7 @@ interface SignupInput {
 }
 
 export const Auth = ({type}:{type:"signup" | "signin"}) => {
+  const BackendUrl=process.env.REACT_APP_BACKEND_URL;
   const navigate= useNavigate();
   const [postInputs,setPostInputs]  = useState<SignupInput>({
     name:"",
