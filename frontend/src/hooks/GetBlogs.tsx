@@ -14,7 +14,7 @@ export interface Blog{
 
 export const useBlogs=()=>{
     const BackendUrl = import.meta.env.VITE_APP_BACKEND_URL;
-    
+    console.log("BackendUrl ",BackendUrl);
     const [loading,setLading]=useState(true);
     const [blogs,setBlogs]=useState<Blog[]>([]);
 
