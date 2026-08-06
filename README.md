@@ -149,9 +149,6 @@ Add screenshots of
 LinkedIn:
 https://www.linkedin.com/in/saaketsuman/
 
-GitHub:
-https://github.com/<your-username>
-
 ---
 
 ## ⭐ Support
