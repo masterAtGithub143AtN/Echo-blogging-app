@@ -46,28 +46,6 @@ A modern full-stack blogging platform that enables users to create, publish, and
 
 ---
 
-## 📂 Project Structure
-
-```
-echo-blogging-app
-│
-├── frontend/
-│   ├── src/
-│   ├── components/
-│   ├── pages/
-│   └── assets/
-│
-├── backend/
-│   ├── src/
-│   ├── routes/
-│   ├── middleware/
-│   └── prisma/
-│
-└── README.md
-```
-
----
-
 ## 🔑 Key Functionalities
 
 - Secure Authentication using JWT
